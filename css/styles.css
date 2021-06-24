@@ -11,14 +11,13 @@ footer {
 
 .navbar {
   background-color: #575c55;
-  padding: 1rem 0;
+  padding: 1.5rem 0 1rem 0;
   color: ivory;
 }
 
-.navbar__inner span.heading {
-  display: block;
+h1.heading {
   text-align: center;
-  font-size: 2rem;
+  color: ivory;
   height: 100%;
 }
 
@@ -39,10 +38,12 @@ footer {
 }
 
 h1,
-h2 {
+h2,
+h3 {
   color: #45425a;
   font-family: 'Roboto';
-  max-width: 44ch;
+
+  margin-top: 0.5rem;
 }
 
 p {
@@ -52,4 +53,24 @@ p {
 
 a {
   color: #acc12f;
+}
+
+#app {
+  margin: 2rem 0;
+}
+
+.promo__blocks {
+  display: flex;
+}
+
+.promo__blocks > div {
+  margin-right: 1rem;
+}
+
+.promo__blocks > div:last-child {
+  margin-right: 0;
+}
+
+.houseplants-promo {
+  margin-top: 3rem;
 }
