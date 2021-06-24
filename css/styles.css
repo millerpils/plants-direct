@@ -15,8 +15,7 @@ footer {
   color: ivory;
 }
 
-h1.heading {
-  text-align: center;
+.navbar__heading h1 {
   color: ivory;
   height: 100%;
 }
@@ -31,6 +30,12 @@ h1.heading {
   margin: 0 0.5rem;
 }
 
+.navbar__inner .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .container {
   position: relative;
   max-width: 1024px;
@@ -43,7 +48,6 @@ h2,
 h3 {
   color: #45425a;
   font-family: 'Roboto';
-
   margin-top: 0.5rem;
 }
 
@@ -54,10 +58,6 @@ p {
 
 a {
   color: #acc12f;
-}
-
-#app {
-  margin: 2rem 0;
 }
 
 .promo-blocks {
@@ -94,9 +94,6 @@ button {
   color: white;
   text-decoration: none;
   cursor: pointer;
-}
-
-.anchor--button {
   margin-right: 0.5rem;
 }
 
@@ -105,7 +102,15 @@ button {
 }
 
 .cart {
-  position: absolute;
-  right: 0;
-  top: 50%;
+}
+
+main {
+  margin: 1.5rem 0;
+}
+
+.heading__sub {
+  font-size: 1rem;
+  font-style: italic;
+  display: block;
+  margin-top: 0.8rem;
 }

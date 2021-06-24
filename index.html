@@ -13,119 +13,129 @@
       href="https://fonts.googleapis.com/css2?family=Open+Sans&family=Roboto:wght@300&display=swap"
       rel="stylesheet"
     />
+
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
     <title>Plants Direct - Our plants, direct to your door</title>
   </head>
   <body>
-    <div class="navbar">
-      <div class="navbar__inner">
-        <div class="container">
-          <h1 class="heading">Plants Direct - our plants, your passion</h1>
-
-          <ul class="navbar__navigation">
-            <li><a href="#">Home</a></li>
-            <li><a href="/plants">Plants</a></li>
-            <li><a href="/about">About</a></li>
-            <li><a href="/contact">Contact</a></li>
-          </ul>
-
-          <div class="cart">Cart ({{cart}})</div>
-        </div>
-      </div>
-    </div>
-
     <div id="app">
-      <div class="container">
-        <h2>Our plants</h2>
-        <p>
-          Want to "fernish" your home? Then you're in the right place! Take a
-          look at our selection of plants below.
-        </p>
-        <div class="promo-blocks products">
-          <div>
-            <h3>{{name}}</h3>
-            <img :src="imageSrc" />
-            <p>{{description}}</p>
-
-            <ul>
-              <li v-for="feature in features">{{feature}}</li>
+      <div class="navbar">
+        <div class="navbar__inner">
+          <div class="container">
+            <div class="navbar__heading">
+              <h1>
+                Plants Direct
+                <span class="heading__sub">"Our plants, your passion"</span>
+              </h1>
+            </div>
+            <ul class="navbar__navigation">
+              <li><a href="#">Home</a></li>
+              <li><a href="/plants">Plants</a></li>
+              <li><a href="/about">About</a></li>
+              <li><a href="/contact">Contact</a></li>
             </ul>
-
-            <p v-if="stockLevel > 10">In stock :)</p>
-            <p v-else-if="stockLevel <= 10 && stockLevel > 0">
-              Last few remaining!
-            </p>
-            <p v-else>Out of stock :(</p>
-
-            <p v-if="stockLevel > 0">&pound;{{ price }}</p>
-
-            <div class="promo-blocks__actions">
-              <a :href="link" class="anchor--button">Full details</a>
-              <button v-on:click="addToCart">Add to cart</button>
-            </div>
-          </div>
-          <div>
-            <h3>Boston Fern</h3>
-            <img src="./images/boston_fern_sm.jpg" />
-            <p>
-              Sed ut perspiciatis, unde omnis iste natus error sit voluptatem
-              accusantium doloremque laudantium, totam rem aperiam eaque ipsa
-            </p>
-            <a href="#">View more</a> |
-            <a href="#">Add to cart</a>
-          </div>
-          <div>
-            <h3>Boston Fern</h3>
-            <img src="./images/boston_fern_sm.jpg" />
-            <p>
-              Sed ut perspiciatis, unde omnis iste natus error sit voluptatem
-              accusantium doloremque laudantium, totam rem aperiam eaque ipsa
-            </p>
-            <a href="#">View more</a> |
-            <a href="#">Add to cart</a>
-          </div>
-        </div>
-
-        <div class="houseplants-promo promo">
-          <h2>Why keep houseplants?</h2>
-          <p>
-            Plants are known to have a calming effect on our nervous systems,
-            but the benefits don't stop there.
-          </p>
-          <div class="promo-blocks">
-            <div>
-              <h3>Pure air</h3>
-              <img src="./images/fresh_air_sm.jpg" />
-              <p>
-                Sed ut perspiciatis, unde omnis iste natus error sit voluptatem
-                accusantium doloremque laudantium, totam rem aperiam eaque ipsa
-              </p>
-            </div>
-            <div>
-              <h3>Pure air</h3>
-              <img src="./images/fresh_air_sm.jpg" />
-              <p>
-                Sed ut perspiciatis, unde omnis iste natus error sit voluptatem
-                accusantium doloremque laudantium, totam rem aperiam eaque ipsa
-              </p>
-            </div>
-            <div>
-              <h3>Pure air</h3>
-              <img src="./images/fresh_air_sm.jpg" />
-              <p>
-                Sed ut perspiciatis, unde omnis iste natus error sit voluptatem
-                accusantium doloremque laudantium, totam rem aperiam eaque ipsa
-              </p>
-            </div>
+            <div class="cart">Cart ({{cart}})</div>
           </div>
         </div>
       </div>
+      <main>
+        <div class="container">
+          <h2>Our plants</h2>
+          <p>
+            Want to "fernish" your home? Then you're in the right place! Take a
+            look at our selection of plants below.
+          </p>
+          <div class="promo-blocks products">
+            <div>
+              <h3>{{name}}</h3>
+              <img :src="imageSrc" />
+              <p>{{description}}</p>
+              <ul>
+                <li v-for="feature in features">{{feature}}</li>
+              </ul>
+              <p>Select size:</p>
+              <p>
+                <button
+                  @click="checkStock(size)"
+                  v-for="size in sizes"
+                  class="sizes"
+                >
+                  {{size.name}}
+                </button>
+              </p>
+
+              <p v-if="price">&pound;{{ price }}</p>
+              <p v-if="stockNotice">{{ stockNotice }}</p>
+
+              <div class="promo-blocks__actions">
+                <a :href="link" class="anchor--button">Full details</a>
+                <button v-if="price" v-on:click="addToCart">Add to cart</button>
+              </div>
+            </div>
+            <div>
+              <h3>Boston Fern</h3>
+              <img src="./images/boston_fern_sm.jpg" />
+              <p>
+                Sed ut perspiciatis, unde omnis iste natus error sit voluptatem
+                accusantium doloremque laudantium, totam rem aperiam eaque ipsa
+              </p>
+              <a href="#">View more</a> |
+              <a href="#">Add to cart</a>
+            </div>
+            <div>
+              <h3>Boston Fern</h3>
+              <img src="./images/boston_fern_sm.jpg" />
+              <p>
+                Sed ut perspiciatis, unde omnis iste natus error sit voluptatem
+                accusantium doloremque laudantium, totam rem aperiam eaque ipsa
+              </p>
+              <a href="#">View more</a> |
+              <a href="#">Add to cart</a>
+            </div>
+          </div>
+
+          <div class="houseplants-promo promo">
+            <h2>Why keep houseplants?</h2>
+            <p>
+              Plants are known to have a calming effect on our nervous systems,
+              but the benefits don't stop there.
+            </p>
+            <div class="promo-blocks">
+              <div>
+                <h3>Pure air</h3>
+                <img src="./images/fresh_air_sm.jpg" />
+                <p>
+                  Sed ut perspiciatis, unde omnis iste natus error sit
+                  voluptatem accusantium doloremque laudantium, totam rem
+                  aperiam eaque ipsa
+                </p>
+              </div>
+              <div>
+                <h3>Pure air</h3>
+                <img src="./images/fresh_air_sm.jpg" />
+                <p>
+                  Sed ut perspiciatis, unde omnis iste natus error sit
+                  voluptatem accusantium doloremque laudantium, totam rem
+                  aperiam eaque ipsa
+                </p>
+              </div>
+              <div>
+                <h3>Pure air</h3>
+                <img src="./images/fresh_air_sm.jpg" />
+                <p>
+                  Sed ut perspiciatis, unde omnis iste natus error sit
+                  voluptatem accusantium doloremque laudantium, totam rem
+                  aperiam eaque ipsa
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+      <footer>
+        <div class="container"><small>&copy; Plants Direct</small></div>
+      </footer>
     </div>
-
-    <footer>
-      <div class="container"><small>&copy; Plants Direct</small></div>
-    </footer>
-
-    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
     <script src="./js/main.js"></script>
   </body>
 </html>
