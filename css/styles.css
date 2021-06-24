@@ -32,6 +32,7 @@ h1.heading {
 }
 
 .container {
+  position: relative;
   max-width: 1024px;
   margin: 0 auto;
   padding: 0 1rem;
@@ -59,18 +60,52 @@ a {
   margin: 2rem 0;
 }
 
-.promo__blocks {
+.promo-blocks {
   display: flex;
 }
 
-.promo__blocks > div {
+.promo-blocks > div {
   margin-right: 1rem;
 }
 
-.promo__blocks > div:last-child {
+.promo-blocks > div:last-child {
   margin-right: 0;
 }
 
 .houseplants-promo {
   margin-top: 3rem;
+}
+
+.promo-blocks ul {
+  margin-left: 1.5rem;
+  list-style: disc;
+}
+
+li {
+  margin-bottom: 0.5rem;
+}
+
+.anchor--button,
+button {
+  font-size: 1rem;
+  border: 0;
+  background-color: #45425a;
+  padding: 0.5rem;
+  color: white;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.anchor--button {
+  margin-right: 0.5rem;
+}
+
+.promo-blocks__actions {
+  display: flex;
+}
+
+.cart {
+  position: absolute;
+  right: 0;
+  top: 50%;
 }
