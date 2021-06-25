@@ -97,6 +97,10 @@ button {
   margin-right: 0.5rem;
 }
 
+button {
+  padding: 0.4rem;
+}
+
 button:hover,
 .anchor--button:hover {
   background-color: #acc12f;
