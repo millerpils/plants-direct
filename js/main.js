@@ -8,11 +8,7 @@ var app = new Vue({
         description:
           'Jagged green fronds - perfect for a bathroom or light windowsill.',
         features: ['Moisture loving', 'Easy care', 'Dislikes direct sun'],
-        variants: [
-          { id: 1, name: 'Small 20cm', price: 3.99, stockLevel: 2 },
-          { id: 2, name: 'Medium 30cm', price: 6.99, stockLevel: 10 },
-        ],
-        selectedVariant: null,
+        stockLevel: 5,
         images: [
           {
             id: 1,
@@ -36,12 +32,13 @@ var app = new Vue({
   },
   methods: {
     addToCart(plant) {
-      this.cart.push(plant.id);
+      // get id, find in cart and go from there
+
+      this.cart.push(plant.productId);
       plant.addedToCart = true;
     },
-    updatePrice(plant, price, index) {
+    updatePrice(plant, price) {
       plant.price = price;
-      plant.selectedVariant = index + 1;
     },
   },
 });

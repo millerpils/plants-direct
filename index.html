@@ -59,30 +59,19 @@
               <ul>
                 <li v-for="feature in plant.features">{{feature}}</li>
               </ul>
-              <p>Select size:</p>
-              <p>
-                <button
-                  v-for="(variant, index) in plant.variants"
-                  :disabled="variant.stockLevel === 0"
-                  :class="[{ 'button--disabled': variant.stockLevel === 0 }, {'button--active' : plant.selectedVariant === variant.id}]"
-                  @click="updatePrice(plant, variant.price, index)"
-                >
-                  {{variant.name}}
-                </button>
-              </p>
 
               <p v-if="plant.price">&pound;{{plant.price}}</p>
 
               <div class="promo-blocks__actions">
-                <a href="{{plant.link}}" class="anchor--button">Full details</a>
+                <a href="{{plant.link}}" class="button--anchor">Full details</a>
                 <button
-                  v-if="plant.price"
-                  v-on:click="addToCart(plant)"
-                  :disabled="plant.addedToCart"
-                  :class="{ 'button--disabled': plant.addedToCart }"
+                  :disabled="plant.stockLevel === 0"
+                  :class="{'button--disabled': plant.stockLevel === 0}"
+                  @click="addToCart(plant)"
                 >
-                  {{ plant.addedToCart ? "Added to cart" : "Add to cart" }}
+                  {{plant.addedToCart ? "Remove from cart" : "Add to cart"}}
                 </button>
+                <span v-if="plant.stockLevel === 0">Out of stock :(</span>
               </div>
             </div>
           </div>
