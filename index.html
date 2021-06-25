@@ -46,21 +46,28 @@
             look at our selection of plants below.
           </p>
           <div class="promo-blocks products">
-            <div>
-              <h3>{{name}}</h3>
-              <img :src="imageSrc" />
-              <p>{{description}}</p>
+            <div class="product" v-for="plant in plants">
+              <h3>{{plant.name}}</h3>
+
+              <img
+                v-for="image in plant.images"
+                v-if="image.size === 'small'"
+                :key="image.id"
+                :src="plant.images[0].imageSrc"
+              />
+
+              <p>{{plant.description}}</p>
               <ul>
-                <li v-for="feature in features">{{feature}}</li>
+                <li v-for="feature in plant.features">{{feature}}</li>
               </ul>
               <p>Select size:</p>
               <p>
                 <button
-                  @click="checkStock(size)"
-                  v-for="size in sizes"
-                  class="sizes"
+                  v-for="variant in plant.variants"
+                  @click="checkStock(variant)"
+                  class="variants"
                 >
-                  {{size.name}}
+                  {{variant.name}}
                 </button>
               </p>
 
@@ -68,29 +75,9 @@
               <p v-if="stockNotice">{{ stockNotice }}</p>
 
               <div class="promo-blocks__actions">
-                <a :href="link" class="anchor--button">Full details</a>
+                <a href="{{plant.link}}" class="anchor--button">Full details</a>
                 <button v-if="price" v-on:click="addToCart">Add to cart</button>
               </div>
-            </div>
-            <div>
-              <h3>Boston Fern</h3>
-              <img src="./images/boston_fern_sm.jpg" />
-              <p>
-                Sed ut perspiciatis, unde omnis iste natus error sit voluptatem
-                accusantium doloremque laudantium, totam rem aperiam eaque ipsa
-              </p>
-              <a href="#">View more</a> |
-              <a href="#">Add to cart</a>
-            </div>
-            <div>
-              <h3>Boston Fern</h3>
-              <img src="./images/boston_fern_sm.jpg" />
-              <p>
-                Sed ut perspiciatis, unde omnis iste natus error sit voluptatem
-                accusantium doloremque laudantium, totam rem aperiam eaque ipsa
-              </p>
-              <a href="#">View more</a> |
-              <a href="#">Add to cart</a>
             </div>
           </div>
 
