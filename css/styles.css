@@ -97,6 +97,11 @@ button {
   margin-right: 0.5rem;
 }
 
+button:hover,
+.anchor--button:hover {
+  background-color: #acc12f;
+}
+
 .promo-blocks__actions {
   display: flex;
 }
@@ -115,7 +120,12 @@ main {
   margin-top: 0.8rem;
 }
 
-.button--disabled {
+.button--disabled,
+.button--disabled:hover {
   background-color: lightgray;
   cursor: unset;
+}
+
+.button--active {
+  background-color: #acc12f;
 }

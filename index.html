@@ -33,7 +33,7 @@
               <li><a href="/about">About</a></li>
               <li><a href="/contact">Contact</a></li>
             </ul>
-            <div class="cart">Cart ({{cart}})</div>
+            <div class="cart">Cart ({{cart.length}})</div>
           </div>
         </div>
       </div>
@@ -64,9 +64,8 @@
                 <button
                   v-for="(variant, index) in plant.variants"
                   :disabled="variant.stockLevel === 0"
-                  :class="[{ 'button--disabled': variant.stockLevel === 0 }]"
-                  @click="updatePrice(plant, variant.price)"
-                  class="variants"
+                  :class="[{ 'button--disabled': variant.stockLevel === 0 }, {'button--active' : plant.selectedVariant === variant.id}]"
+                  @click="updatePrice(plant, variant.price, index)"
                 >
                   {{variant.name}}
                 </button>
@@ -76,8 +75,13 @@
 
               <div class="promo-blocks__actions">
                 <a href="{{plant.link}}" class="anchor--button">Full details</a>
-                <button v-if="plant.price" v-on:click="addToCart">
-                  Add to cart
+                <button
+                  v-if="plant.price"
+                  v-on:click="addToCart(plant)"
+                  :disabled="plant.addedToCart"
+                  :class="{ 'button--disabled': plant.addedToCart }"
+                >
+                  {{ plant.addedToCart ? "Added to cart" : "Add to cart" }}
                 </button>
               </div>
             </div>
