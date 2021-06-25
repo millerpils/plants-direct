@@ -8,9 +8,10 @@ var app = new Vue({
           'Jagged green fronds - perfect for a bathroom or light windowsill.',
         features: ['Moisture loving', 'Easy care', 'Dislikes direct sun'],
         variants: [
-          { name: 'Small 20cm', price: 3.99, stockLevel: 0 },
-          { name: 'Medium 30cm', price: 6.99, stockLevel: 10 },
+          { id: 1, name: 'Small 20cm', price: 3.99, stockLevel: 0 },
+          { id: 2, name: 'Medium 30cm', price: 6.99, stockLevel: 10 },
         ],
+        selectedVariant: 1,
         images: [
           {
             id: 1,
@@ -25,28 +26,18 @@ var app = new Vue({
             imageSrc: './images/boston_fern_lg.jpg',
           },
         ],
+        price: null,
         link: '/products/boston-fern',
       },
     ],
-    price: null,
-    stockNotice: null,
     cart: 0,
   },
   methods: {
-    addToCart: function (e) {
+    addToCart() {
       this.cart += 1;
     },
-    checkStock: function (variant) {
-      if (variant.stockLevel > 0) {
-        return this.updatePrice(variant.price);
-      }
-
-      this.price = null;
-      this.stockNotice = 'Sorry, we are out of stock';
-    },
-    updatePrice: function (itemPrice) {
-      this.stockNotice = null;
-      this.price = itemPrice;
+    updatePrice(plant, price) {
+      plant.price = price;
     },
   },
 });

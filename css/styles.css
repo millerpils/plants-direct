@@ -114,3 +114,8 @@ main {
   display: block;
   margin-top: 0.8rem;
 }
+
+.button--disabled {
+  background-color: lightgray;
+  cursor: unset;
+}
