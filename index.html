@@ -45,35 +45,7 @@
             look at our selection of plants below.
           </p>
           <div class="promo-blocks products">
-            <div class="product" v-for="plant in plants">
-              <h3>{{plant.name}}</h3>
-
-              <img
-                v-for="image in plant.images"
-                v-if="image.size === 'small'"
-                :key="image.id"
-                :src="plant.images[0].imageSrc"
-              />
-
-              <p>{{plant.description}}</p>
-              <ul>
-                <li v-for="feature in plant.features">{{feature}}</li>
-              </ul>
-
-              <p v-if="plant.price">&pound;{{plant.price}}</p>
-
-              <div class="promo-blocks__actions">
-                <a href="{{plant.link}}" class="button--anchor">Full details</a>
-                <button
-                  :disabled="plant.stockLevel === 0"
-                  :class="{'button--disabled': plant.stockLevel === 0}"
-                  @click="addToCart(plant)"
-                >
-                  {{plant.addedToCart ? "Remove from cart" : "Add to cart"}}
-                </button>
-                <span v-if="plant.stockLevel === 0">Out of stock :(</span>
-              </div>
-            </div>
+            <product v-for="product in products" :key="product.id"></product>
           </div>
 
           <div class="houseplants-promo promo">

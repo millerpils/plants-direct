@@ -1,9 +1,26 @@
+Vue.component('product', {
+  template: `
+    {{ product.name}}
+  `,
+
+  methods: {
+    // addToCart(product) {
+    //   this.cart.push(product.productId);
+    //   product.addedToCart = true;
+    // },
+    // updatePrice(product, price) {
+    //   product.price = price;
+    // },
+  },
+});
+
 var app = new Vue({
   el: '#app',
   data: {
-    plants: [
+    cart: [],
+    products: [
       {
-        productId: 1,
+        id: 1,
         name: 'Boston Fern',
         description:
           'Jagged green fronds - perfect for a bathroom or light windowsill.',
@@ -28,7 +45,7 @@ var app = new Vue({
         addedToCart: false,
       },
       {
-        productId: 2,
+        id: 2,
         name: 'Maidenhair Fern',
         description:
           'Jagged green fronds - perfect for a bathroom or light windowsill.',
@@ -53,7 +70,7 @@ var app = new Vue({
         addedToCart: false,
       },
       {
-        productId: 3,
+        id: 3,
         name: 'Tree Fern',
         description:
           'Jagged green fronds - perfect for a bathroom or light windowsill.',
@@ -78,17 +95,5 @@ var app = new Vue({
         addedToCart: false,
       },
     ],
-    cart: [],
-  },
-  methods: {
-    addToCart(plant) {
-      // get id, find in cart and go from there
-
-      this.cart.push(plant.productId);
-      plant.addedToCart = true;
-    },
-    updatePrice(plant, price) {
-      plant.price = price;
-    },
   },
 });
