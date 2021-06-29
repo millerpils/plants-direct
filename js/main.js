@@ -4,6 +4,10 @@
 - add the id to the cart
 - find and remove the id from the cart
 
+"If you need to change data, you must use methods. 
+
+And when you need to change the presentation of existing data, you will use computed properties"
+
 */
 
 Vue.component('product', {
@@ -27,7 +31,7 @@ Vue.component('product', {
           :disabled="product.stockLevel === 0"
           :class="{'button--disabled': product.stockLevel === 0}"
           @click="addToCart(product)"
-        >
+          >
           {{product.addedToCart ? "Remove from cart" : "Add to cart"}}
         </button>
         <span v-if="product.stockLevel === 0">Out of stock :(</span>
@@ -40,8 +44,8 @@ Vue.component('product', {
       return product.images[0].imageSrc;
     },
     addToCart(product) {
-      this.cart.push(product.productId);
-      product.addedToCart = true;
+      product.addedToCart = !product.addedToCart;
+      this.$emit('add-to-cart', product);
     },
   },
   data() {
@@ -51,6 +55,15 @@ Vue.component('product', {
 
 var app = new Vue({
   el: '#app',
+  methods: {
+    updateCart(product) {
+      if (this.cart.indexOf(product.productId) === -1) {
+        return this.cart.push(product.productId);
+      }
+
+      this.cart.splice(this.cart.indexOf(product.productId), 1);
+    },
+  },
   data: {
     cart: [],
     products: [
