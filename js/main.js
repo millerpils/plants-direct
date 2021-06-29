@@ -1,12 +1,8 @@
 /* next steps
 
-- hook up cart to parent data using event signal
-- add the id to the cart
-- find and remove the id from the cart
 
-"If you need to change data, you must use methods. 
-
-And when you need to change the presentation of existing data, you will use computed properties"
+Use methods when you want to change data
+Use computer properties when you need to change the presentation of existing data
 
 */
 
@@ -57,7 +53,7 @@ var app = new Vue({
   el: '#app',
   methods: {
     updateCart(product) {
-      if (this.cart.indexOf(product.productId) === -1) {
+      if (!this.cart.includes(product.productId)) {
         return this.cart.push(product.productId);
       }
 
