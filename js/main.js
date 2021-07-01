@@ -26,7 +26,7 @@ Vue.component('Product', {
       </div>
     </div>
   `,
-  props: ['product'],
+  props: ['product', 'updateCart'],
   methods: {
     getImage(product) {
       return product.images[0].imageSrc;
@@ -55,6 +55,7 @@ Vue.component('Home', {
           v-for="product in products"
           :key="product.productId"
           :product="product"
+          @add-to-cart="updateCart"
         ></product>
       </div>
 
@@ -96,8 +97,12 @@ Vue.component('Home', {
       </div>
     </div>
   `,
-  props: ['products'],
-  methods: {},
+  props: ['products', 'addToCart'],
+  methods: {
+    updateCart(product) {
+      this.$emit('update-cart', product);
+    },
+  },
   data() {
     return {};
   },
@@ -107,6 +112,8 @@ var app = new Vue({
   el: '#app',
   methods: {
     updateCart(product) {
+      console.log(product.productId);
+
       if (!this.cart.includes(product.productId)) {
         return this.cart.push(product.productId);
       }
