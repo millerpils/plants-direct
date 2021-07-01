@@ -55,7 +55,6 @@ Vue.component('Home', {
           v-for="product in products"
           :key="product.productId"
           :product="product"
-          @add-to-cart="updateCart"
         ></product>
       </div>
 
