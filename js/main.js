@@ -1,4 +1,12 @@
-Vue.component('Product', {
+const ProductDetails = Vue.component('Product-Details', {
+  template: `
+    <div class="product-details">
+      <h3>Product Details</h3>
+    </div>
+  `,
+});
+
+const Product = Vue.component('Product', {
   template: `
     <div class="product">
       <h3>{{product.name}}</h3>
@@ -36,15 +44,12 @@ Vue.component('Product', {
       this.$emit('add-to-cart', product);
     },
   },
-  data() {
-    return {};
-  },
 });
 
-Vue.component('Home', {
+const Home = Vue.component('Home', {
   template: `
     <div>
-      <h2>Our plants</h2>
+      <h2>Popular plants</h2>
       <p>
         Want to "fernish" your home? Then you're in the right place! Take a
         look at our selection of plants below.
@@ -103,17 +108,31 @@ Vue.component('Home', {
       this.$emit('update-cart', product);
     },
   },
-  data() {
-    return {};
-  },
 });
 
-var app = new Vue({
-  el: '#app',
+const Products = Vue.component('products', {
+  template: `
+    <div>
+      <h2>Our plants</h2>
+    </div>
+  `,
+});
+
+const router = new VueRouter({
+  routes: [
+    {
+      path: '/',
+      component: Home,
+      props: true,
+    },
+    { path: '/products', component: Products },
+    { path: '/products/:id', component: ProductDetails },
+  ],
+});
+
+new Vue({
   methods: {
     updateCart(product) {
-      console.log(product.productId);
-
       if (!this.cart.includes(product.productId)) {
         return this.cart.push(product.productId);
       }
@@ -198,4 +217,5 @@ var app = new Vue({
       },
     ],
   },
-});
+  router,
+}).$mount('#app');
