@@ -5,8 +5,83 @@ Use methods when you want to change data
 Use computer properties when you need to change the presentation of existing data
 
 */
+const FullProduct = Vue.component('Full-product', {
+  template: `
+    <div class="product--full-details">
+      {{ $route.params.id }}
+    </div>
+  `,
+  props: [],
+  methods: {},
+  data() {
+    return {};
+  },
+});
 
-Vue.component('product', {
+Vue.component('Home', {
+  template: `
+    <div>
+      <h2>Our plants</h2>
+      <p>
+        Want to "fernish" your home? Then you're in the right place! Take a
+        look at our selection of plants below.
+      </p>
+
+      <div class="promo-blocks products">
+        <product
+          v-for="product in products"
+          :key="product.productId"
+          :product="product"
+          @add-to-cart="updateCart"
+        ></product>
+      </div>
+
+      <div class="houseplants-promo promo">
+        <h2>Why keep houseplants?</h2>
+        <p>
+          Plants are known to have a calming effect on our nervous systems,
+          but the benefits don't stop there.
+        </p>
+        <div class="promo-blocks">
+          <div>
+            <h3>Pure air</h3>
+            <img src="./images/fresh_air_sm.jpg" />
+            <p>
+              Sed ut perspiciatis, unde omnis iste natus error sit
+              voluptatem accusantium doloremque laudantium, totam rem
+              aperiam eaque ipsa
+            </p>
+          </div>
+          <div>
+            <h3>Pure air</h3>
+            <img src="./images/fresh_air_sm.jpg" />
+            <p>
+              Sed ut perspiciatis, unde omnis iste natus error sit
+              voluptatem accusantium doloremque laudantium, totam rem
+              aperiam eaque ipsa
+            </p>
+          </div>
+          <div>
+            <h3>Pure air</h3>
+            <img src="./images/fresh_air_sm.jpg" />
+            <p>
+              Sed ut perspiciatis, unde omnis iste natus error sit
+              voluptatem accusantium doloremque laudantium, totam rem
+              aperiam eaque ipsa
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  `,
+  props: [product],
+  methods: {},
+  data() {
+    return {};
+  },
+});
+
+Vue.component('Product', {
   template: `
     <div class="product">
       <h3>{{product.name}}</h3>
@@ -22,7 +97,7 @@ Vue.component('product', {
       <p>&pound;{{product.price}}</p>
 
       <div class="promo-blocks__actions">
-        <a href="{{product.link}}" class="button--anchor">Full details</a>
+        <router-link to="/products/{{product.productId}}" className="button--anchor">Full details</router-link>
         <button
           :disabled="product.stockLevel === 0"
           :class="{'button--disabled': product.stockLevel === 0}"
@@ -85,7 +160,6 @@ var app = new Vue({
           },
         ],
         price: 1.99,
-        link: '/products/boston-fern',
         addedToCart: false,
       },
       {
@@ -110,7 +184,6 @@ var app = new Vue({
           },
         ],
         price: 6.99,
-        link: '/products/boston-fern',
         addedToCart: false,
       },
       {
@@ -135,7 +208,6 @@ var app = new Vue({
           },
         ],
         price: 3.99,
-        link: '/products/boston-fern',
         addedToCart: false,
       },
     ],
