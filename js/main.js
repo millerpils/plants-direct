@@ -1,12 +1,12 @@
-/* next steps
+const ProductDetails = Vue.component('Product-Details', {
+  template: `
+    <div class="product-details">
+      <h3>Product Details</h3>
+    </div>
+  `,
+});
 
-
-Use methods when you want to change data
-Use computer properties when you need to change the presentation of existing data
-
-*/
-
-Vue.component('product', {
+const Product = Vue.component('Product', {
   template: `
     <div class="product">
       <h3>{{product.name}}</h3>
@@ -22,8 +22,8 @@ Vue.component('product', {
       <p>&pound;{{product.price}}</p>
 
       <div class="promo-blocks__actions">
-        <a href="{{product.link}}" class="button--anchor">Full details</a>
-        <button
+      <router-link :to="{ name: 'productDetails', params: {productId: product.productId } }" class="button--anchor">Full Details</router-link>        
+      <button
           :disabled="product.stockLevel === 0"
           :class="{'button--disabled': product.stockLevel === 0}"
           @click="addToCart(product)"
@@ -34,7 +34,7 @@ Vue.component('product', {
       </div>
     </div>
   `,
-  props: ['product'],
+  props: ['product', 'updateCart'],
   methods: {
     getImage(product) {
       return product.images[0].imageSrc;
@@ -44,13 +44,97 @@ Vue.component('product', {
       this.$emit('add-to-cart', product);
     },
   },
-  data() {
-    return {};
+});
+
+const Home = Vue.component('Home', {
+  template: `
+    <div>
+      <h2>Popular plants</h2>
+      <p>
+        Want to "fernish" your home? Then you're in the right place! Take a
+        look at our selection of plants below.
+      </p>
+
+      <div class="promo-blocks products">
+        <product
+          v-for="product in products"
+          :key="product.productId"
+          :product="product"
+          @add-to-cart="updateCart"
+        ></product>
+      </div>
+
+      <div class="houseplants-promo promo">
+        <h2>Why keep houseplants?</h2>
+        <p>
+          Plants are known to have a calming effect on our nervous systems,
+          but the benefits don't stop there.
+        </p>
+        <div class="promo-blocks">
+          <div>
+            <h3>Pure air</h3>
+            <img src="./images/fresh_air_sm.jpg" />
+            <p>
+              Sed ut perspiciatis, unde omnis iste natus error sit
+              voluptatem accusantium doloremque laudantium, totam rem
+              aperiam eaque ipsa
+            </p>
+          </div>
+          <div>
+            <h3>Pure air</h3>
+            <img src="./images/fresh_air_sm.jpg" />
+            <p>
+              Sed ut perspiciatis, unde omnis iste natus error sit
+              voluptatem accusantium doloremque laudantium, totam rem
+              aperiam eaque ipsa
+            </p>
+          </div>
+          <div>
+            <h3>Pure air</h3>
+            <img src="./images/fresh_air_sm.jpg" />
+            <p>
+              Sed ut perspiciatis, unde omnis iste natus error sit
+              voluptatem accusantium doloremque laudantium, totam rem
+              aperiam eaque ipsa
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  `,
+  props: ['products', 'addToCart'],
+  methods: {
+    updateCart(product) {
+      this.$emit('update-cart', product);
+    },
   },
 });
 
-var app = new Vue({
-  el: '#app',
+const Products = Vue.component('products', {
+  template: `
+    <div>
+      <h2>Our plants</h2>
+    </div>
+  `,
+});
+
+const router = new VueRouter({
+  routes: [
+    {
+      path: '/',
+      component: Home,
+      props: true,
+    },
+    { path: '/products', component: Products },
+    {
+      path: '/products/:productId',
+      name: 'productDetails',
+      component: ProductDetails,
+    },
+  ],
+});
+
+new Vue({
   methods: {
     updateCart(product) {
       if (!this.cart.includes(product.productId)) {
@@ -85,7 +169,6 @@ var app = new Vue({
           },
         ],
         price: 1.99,
-        link: '/products/boston-fern',
         addedToCart: false,
       },
       {
@@ -110,7 +193,6 @@ var app = new Vue({
           },
         ],
         price: 6.99,
-        link: '/products/boston-fern',
         addedToCart: false,
       },
       {
@@ -135,9 +217,9 @@ var app = new Vue({
           },
         ],
         price: 3.99,
-        link: '/products/boston-fern',
         addedToCart: false,
       },
     ],
   },
-});
+  router,
+}).$mount('#app');

@@ -28,8 +28,8 @@
               </h1>
             </div>
             <ul class="navbar__navigation">
-              <li><a href="#">Home</a></li>
-              <li><a href="/plants">Plants</a></li>
+              <li><router-link to="/">Home</router-link></li>
+              <li><router-link to="/products">Plants</router-link></li>
               <li><a href="/about">About</a></li>
               <li><a href="/contact">Contact</a></li>
             </ul>
@@ -39,64 +39,16 @@
       </div>
       <main>
         <div class="container">
-          <h2>Our plants</h2>
-          <p>
-            Want to "fernish" your home? Then you're in the right place! Take a
-            look at our selection of plants below.
-          </p>
-
-          <div class="promo-blocks products">
-            <product
-              v-for="product in products"
-              :key="product.productId"
-              :product="product"
-              @add-to-cart="updateCart"
-            ></product>
-          </div>
-
-          <div class="houseplants-promo promo">
-            <h2>Why keep houseplants?</h2>
-            <p>
-              Plants are known to have a calming effect on our nervous systems,
-              but the benefits don't stop there.
-            </p>
-            <div class="promo-blocks">
-              <div>
-                <h3>Pure air</h3>
-                <img src="./images/fresh_air_sm.jpg" />
-                <p>
-                  Sed ut perspiciatis, unde omnis iste natus error sit
-                  voluptatem accusantium doloremque laudantium, totam rem
-                  aperiam eaque ipsa
-                </p>
-              </div>
-              <div>
-                <h3>Pure air</h3>
-                <img src="./images/fresh_air_sm.jpg" />
-                <p>
-                  Sed ut perspiciatis, unde omnis iste natus error sit
-                  voluptatem accusantium doloremque laudantium, totam rem
-                  aperiam eaque ipsa
-                </p>
-              </div>
-              <div>
-                <h3>Pure air</h3>
-                <img src="./images/fresh_air_sm.jpg" />
-                <p>
-                  Sed ut perspiciatis, unde omnis iste natus error sit
-                  voluptatem accusantium doloremque laudantium, totam rem
-                  aperiam eaque ipsa
-                </p>
-              </div>
-            </div>
-          </div>
+          <router-view :products="products" @update-cart="updateCart" />
         </div>
       </main>
       <footer>
         <div class="container"><small>&copy; Plants Direct</small></div>
       </footer>
     </div>
+
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
     <script src="./js/main.js"></script>
   </body>
 </html>
