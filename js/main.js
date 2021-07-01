@@ -1,18 +1,41 @@
-/* next steps
-
-
-Use methods when you want to change data
-Use computer properties when you need to change the presentation of existing data
-
-*/
-const FullProduct = Vue.component('Full-product', {
+Vue.component('Product', {
   template: `
-    <div class="product--full-details">
-      {{ $route.params.id }}
+    <div class="product">
+      <h3>{{product.name}}</h3>
+      <img
+        :src="getImage(product)"
+      />
+
+      <p>{{product.description}}</p>
+      <ul>
+        <li v-for="feature in product.features">{{feature}}</li>
+      </ul>
+
+      <p>&pound;{{product.price}}</p>
+
+      <div class="promo-blocks__actions">
+        <router-link to="/products/{{product.productId}}" className="button--anchor">Full details</router-link>
+        <button
+          :disabled="product.stockLevel === 0"
+          :class="{'button--disabled': product.stockLevel === 0}"
+          @click="addToCart(product)"
+          >
+          {{product.addedToCart ? "Remove from cart" : "Add to cart"}}
+        </button>
+        <span v-if="product.stockLevel === 0">Out of stock :(</span>
+      </div>
     </div>
   `,
-  props: [],
-  methods: {},
+  props: ['product'],
+  methods: {
+    getImage(product) {
+      return product.images[0].imageSrc;
+    },
+    addToCart(product) {
+      product.addedToCart = !product.addedToCart;
+      this.$emit('add-to-cart', product);
+    },
+  },
   data() {
     return {};
   },
@@ -74,51 +97,8 @@ Vue.component('Home', {
       </div>
     </div>
   `,
-  props: [product],
+  props: ['products'],
   methods: {},
-  data() {
-    return {};
-  },
-});
-
-Vue.component('Product', {
-  template: `
-    <div class="product">
-      <h3>{{product.name}}</h3>
-      <img
-        :src="getImage(product)"
-      />
-
-      <p>{{product.description}}</p>
-      <ul>
-        <li v-for="feature in product.features">{{feature}}</li>
-      </ul>
-
-      <p>&pound;{{product.price}}</p>
-
-      <div class="promo-blocks__actions">
-        <router-link to="/products/{{product.productId}}" className="button--anchor">Full details</router-link>
-        <button
-          :disabled="product.stockLevel === 0"
-          :class="{'button--disabled': product.stockLevel === 0}"
-          @click="addToCart(product)"
-          >
-          {{product.addedToCart ? "Remove from cart" : "Add to cart"}}
-        </button>
-        <span v-if="product.stockLevel === 0">Out of stock :(</span>
-      </div>
-    </div>
-  `,
-  props: ['product'],
-  methods: {
-    getImage(product) {
-      return product.images[0].imageSrc;
-    },
-    addToCart(product) {
-      product.addedToCart = !product.addedToCart;
-      this.$emit('add-to-cart', product);
-    },
-  },
   data() {
     return {};
   },
