@@ -39,9 +39,7 @@
       </div>
       <main>
         <div class="container">
-          <router-view>
-            <!-- <Home :products="products" @update-cart="updateCart"></Home> -->
-          </router-view>
+          <router-view :products="products" @update-cart="updateCart" />
         </div>
       </main>
       <footer>

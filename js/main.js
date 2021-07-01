@@ -22,8 +22,8 @@ const Product = Vue.component('Product', {
       <p>&pound;{{product.price}}</p>
 
       <div class="promo-blocks__actions">
-        <router-link to="/products/{{product.productId}}" className="button--anchor">Full details</router-link>
-        <button
+      <router-link :to="{ name: 'productDetails', params: {productId: product.productId } }" class="button--anchor">Full Details</router-link>        
+      <button
           :disabled="product.stockLevel === 0"
           :class="{'button--disabled': product.stockLevel === 0}"
           @click="addToCart(product)"
@@ -126,7 +126,11 @@ const router = new VueRouter({
       props: true,
     },
     { path: '/products', component: Products },
-    { path: '/products/:id', component: ProductDetails },
+    {
+      path: '/products/:productId',
+      name: 'productDetails',
+      component: ProductDetails,
+    },
   ],
 });
 
