@@ -2,8 +2,10 @@ const ProductDetails = Vue.component('Product-Details', {
   template: `
     <div class="product-details">
       <h3>Product Details</h3>
+      {{greeting}}
     </div>
   `,
+  props: ['greeting'],
 });
 
 const Product = Vue.component('Product', {
@@ -22,7 +24,7 @@ const Product = Vue.component('Product', {
       <p>&pound;{{product.price}}</p>
 
       <div class="promo-blocks__actions">
-      <router-link :to="{ name: 'productDetails', params: {productId: product.productId } }" class="button--anchor">Full Details</router-link>        
+      <router-link :to="{ name: 'productDetails', params: {productId: product.productId }}" class="button--anchor">Full Details</router-link>        
       <button
           :disabled="product.stockLevel === 0"
           :class="{'button--disabled': product.stockLevel === 0}"
@@ -64,7 +66,7 @@ const Home = Vue.component('Home', {
         ></product>
       </div>
 
-      <div class="houseplants-promo promo">
+      <div class="promo-section promo">
         <h2>Why keep houseplants?</h2>
         <p>
           Plants are known to have a calming effect on our nervous systems,
@@ -72,7 +74,7 @@ const Home = Vue.component('Home', {
         </p>
         <div class="promo-blocks">
           <div>
-            <h3>Pure air</h3>
+            <h3>Clean air</h3>
             <img src="./images/fresh_air_sm.jpg" />
             <p>
               Sed ut perspiciatis, unde omnis iste natus error sit
@@ -81,7 +83,7 @@ const Home = Vue.component('Home', {
             </p>
           </div>
           <div>
-            <h3>Pure air</h3>
+            <h3>Nervous system</h3>
             <img src="./images/fresh_air_sm.jpg" />
             <p>
               Sed ut perspiciatis, unde omnis iste natus error sit
@@ -90,7 +92,7 @@ const Home = Vue.component('Home', {
             </p>
           </div>
           <div>
-            <h3>Pure air</h3>
+            <h3>Great hobby</h3>
             <img src="./images/fresh_air_sm.jpg" />
             <p>
               Sed ut perspiciatis, unde omnis iste natus error sit
@@ -130,6 +132,7 @@ const router = new VueRouter({
       path: '/products/:productId',
       name: 'productDetails',
       component: ProductDetails,
+      props: { greeting: 'hello' },
     },
   ],
 });
@@ -165,7 +168,7 @@ new Vue({
             imageId: 2,
             size: 'large',
             title: 'Large Boston Fern',
-            imageSrc: './images/boston_fern_lg.jpg',
+            imageSrc: './images/boston_fern_sm.jpg',
           },
         ],
         price: 1.99,
@@ -183,13 +186,13 @@ new Vue({
             id: 1,
             size: 'small',
             title: 'Small Boston Fern',
-            imageSrc: './images/boston_fern_sm.jpg',
+            imageSrc: './images/maidenhair_fern_sm.jpg',
           },
           {
             id: 2,
             size: 'large',
             title: 'Large Boston Fern',
-            imageSrc: './images/boston_fern_lg.jpg',
+            imageSrc: './images/maidenhair_fern_sm.jpg',
           },
         ],
         price: 6.99,
@@ -207,13 +210,13 @@ new Vue({
             id: 1,
             size: 'small',
             title: 'Small Boston Fern',
-            imageSrc: './images/boston_fern_sm.jpg',
+            imageSrc: './images/tree_fern_sm.jpg',
           },
           {
             id: 2,
             size: 'large',
             title: 'Large Boston Fern',
-            imageSrc: './images/boston_fern_lg.jpg',
+            imageSrc: './images/tree_fern_sm.jpg',
           },
         ],
         price: 3.99,

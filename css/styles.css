@@ -72,7 +72,7 @@ a {
   margin-right: 0;
 }
 
-.houseplants-promo {
+.promo-section {
   margin-top: 3rem;
 }
 
@@ -130,4 +130,9 @@ main {
 
 .button--active {
   background-color: #acc12f;
+}
+
+.product img,
+.promo-blocks > div img {
+  max-height: 12rem;
 }
