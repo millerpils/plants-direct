@@ -1,11 +1,99 @@
+const store = new Vuex.Store({
+  state: {
+    cart: [],
+    products: [
+      {
+        productId: 1,
+        name: 'Boston Fern',
+        description:
+          'Jagged green fronds - perfect for a bathroom or light windowsill.',
+        features: ['Moisture loving', 'Easy care', 'Dislikes direct sun'],
+        stockLevel: 5,
+        images: [
+          {
+            imageId: 1,
+            size: 'small',
+            title: 'Small Boston Fern',
+            imageSrc: './images/boston_fern_sm.jpg',
+          },
+          {
+            imageId: 2,
+            size: 'large',
+            title: 'Large Boston Fern',
+            imageSrc: './images/boston_fern_sm.jpg',
+          },
+        ],
+        price: 1.99,
+        addedToCart: false,
+      },
+      {
+        productId: 2,
+        name: 'Maidenhair Fern',
+        description:
+          'Jagged green fronds - perfect for a bathroom or light windowsill.',
+        features: ['Moisture loving', 'Easy care', 'Dislikes direct sun'],
+        stockLevel: 5,
+        images: [
+          {
+            id: 1,
+            size: 'small',
+            title: 'Small Boston Fern',
+            imageSrc: './images/maidenhair_fern_sm.jpg',
+          },
+          {
+            id: 2,
+            size: 'large',
+            title: 'Large Boston Fern',
+            imageSrc: './images/maidenhair_fern_sm.jpg',
+          },
+        ],
+        price: 6.99,
+        addedToCart: false,
+      },
+      {
+        productId: 3,
+        name: 'Tree Fern',
+        description:
+          'Jagged green fronds - perfect for a bathroom or light windowsill.',
+        features: ['Moisture loving', 'Easy care', 'Dislikes direct sun'],
+        stockLevel: 5,
+        images: [
+          {
+            id: 1,
+            size: 'small',
+            title: 'Small Boston Fern',
+            imageSrc: './images/tree_fern_sm.jpg',
+          },
+          {
+            id: 2,
+            size: 'large',
+            title: 'Large Boston Fern',
+            imageSrc: './images/tree_fern_sm.jpg',
+          },
+        ],
+        price: 3.99,
+        addedToCart: false,
+      },
+    ],
+  },
+  mutations: {
+    setAddedToCart(state, payload) {},
+  },
+  actions: {},
+  modules: {},
+  getters: {
+    getAllProducts: (state) => state.products,
+    getCartLength: (state) => state.cart.length,
+  },
+});
+
 const ProductDetails = Vue.component('Product-Details', {
   template: `
     <div class="product-details">
       <h3>Product Details</h3>
-      {{greeting}}
+
     </div>
   `,
-  props: ['greeting'],
 });
 
 const Product = Vue.component('Product', {
@@ -139,90 +227,21 @@ const router = new VueRouter({
 
 new Vue({
   methods: {
-    updateCart(product) {
-      if (!this.cart.includes(product.productId)) {
-        return this.cart.push(product.productId);
-      }
-
-      this.cart.splice(this.cart.indexOf(product.productId), 1);
-    },
+    // updateCart(product) {
+    //   if (!this.cart.includes(product.productId)) {
+    //     return this.cart.push(product.productId);
+    //   }
+    //   this.cart.splice(this.cart.indexOf(product.productId), 1);
+    // },
   },
-  data: {
-    cart: [],
-    products: [
-      {
-        productId: 1,
-        name: 'Boston Fern',
-        description:
-          'Jagged green fronds - perfect for a bathroom or light windowsill.',
-        features: ['Moisture loving', 'Easy care', 'Dislikes direct sun'],
-        stockLevel: 5,
-        images: [
-          {
-            imageId: 1,
-            size: 'small',
-            title: 'Small Boston Fern',
-            imageSrc: './images/boston_fern_sm.jpg',
-          },
-          {
-            imageId: 2,
-            size: 'large',
-            title: 'Large Boston Fern',
-            imageSrc: './images/boston_fern_sm.jpg',
-          },
-        ],
-        price: 1.99,
-        addedToCart: false,
-      },
-      {
-        productId: 2,
-        name: 'Maidenhair Fern',
-        description:
-          'Jagged green fronds - perfect for a bathroom or light windowsill.',
-        features: ['Moisture loving', 'Easy care', 'Dislikes direct sun'],
-        stockLevel: 5,
-        images: [
-          {
-            id: 1,
-            size: 'small',
-            title: 'Small Boston Fern',
-            imageSrc: './images/maidenhair_fern_sm.jpg',
-          },
-          {
-            id: 2,
-            size: 'large',
-            title: 'Large Boston Fern',
-            imageSrc: './images/maidenhair_fern_sm.jpg',
-          },
-        ],
-        price: 6.99,
-        addedToCart: false,
-      },
-      {
-        productId: 3,
-        name: 'Tree Fern',
-        description:
-          'Jagged green fronds - perfect for a bathroom or light windowsill.',
-        features: ['Moisture loving', 'Easy care', 'Dislikes direct sun'],
-        stockLevel: 5,
-        images: [
-          {
-            id: 1,
-            size: 'small',
-            title: 'Small Boston Fern',
-            imageSrc: './images/tree_fern_sm.jpg',
-          },
-          {
-            id: 2,
-            size: 'large',
-            title: 'Large Boston Fern',
-            imageSrc: './images/tree_fern_sm.jpg',
-          },
-        ],
-        price: 3.99,
-        addedToCart: false,
-      },
-    ],
+  data() {
+    return {
+      // products: null,
+    };
+  },
+  mounted() {
+    // this.products = store.getters.getAllProducts;
   },
   router,
+  store,
 }).$mount('#app');

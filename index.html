@@ -33,13 +33,13 @@
               <li><a href="/about">About</a></li>
               <li><a href="/contact">Contact</a></li>
             </ul>
-            <div class="cart">Cart ({{cart.length}})</div>
+            <div class="cart">Cart ({{store.getters.getCartLength}})</div>
           </div>
         </div>
       </div>
       <main>
         <div class="container">
-          <router-view :products="products" @update-cart="updateCart" />
+          <router-view :products="store.getters.getAllProducts" />
         </div>
       </main>
       <footer>
@@ -49,6 +49,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>
     <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+    <script src=" https://unpkg.com/vuex@3.6.2/dist/vuex.js"></script>
     <script src="./js/main.js"></script>
   </body>
 </html>
