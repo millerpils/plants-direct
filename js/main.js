@@ -77,7 +77,7 @@ const store = new Vuex.Store({
     ],
   },
   mutations: {
-    setAddedToCart(state, payload) {},
+    updateCart(state, payload) {},
   },
   actions: {},
   modules: {},
@@ -195,6 +195,7 @@ const Home = Vue.component('Home', {
   props: ['products', 'addToCart'],
   methods: {
     updateCart(product) {
+      console.log(product);
       this.$emit('update-cart', product);
     },
   },
@@ -227,20 +228,13 @@ const router = new VueRouter({
 
 new Vue({
   methods: {
-    // updateCart(product) {
-    //   if (!this.cart.includes(product.productId)) {
-    //     return this.cart.push(product.productId);
-    //   }
-    //   this.cart.splice(this.cart.indexOf(product.productId), 1);
-    // },
-  },
-  data() {
-    return {
-      // products: null,
-    };
-  },
-  mounted() {
-    // this.products = store.getters.getAllProducts;
+    updateCart(product) {
+      console.log('hi');
+      // if (!this.cart.includes(product.productId)) {
+      //   return this.cart.push(product.productId);
+      // }
+      // this.cart.splice(this.cart.indexOf(product.productId), 1);
+    },
   },
   router,
   store,
