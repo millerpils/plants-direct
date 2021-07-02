@@ -229,7 +229,7 @@ const router = new VueRouter({
 new Vue({
   methods: {
     updateCart(product) {
-      console.log('hi');
+      console.log(store.getters.getAllProducts);
       // if (!this.cart.includes(product.productId)) {
       //   return this.cart.push(product.productId);
       // }
