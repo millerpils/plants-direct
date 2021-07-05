@@ -1,11 +1,119 @@
+const store = new Vuex.Store({
+  state: {
+    cart: [],
+    products: [
+      {
+        productId: 1,
+        name: 'Boston Fern',
+        description:
+          'Nephrolepis exaltata, known as the sword fern or Boston fern, is a species of fern in the family Lomariopsidaceae native to tropical regions throughout the world.',
+        features: ['Moisture loving', 'Easy care', 'Dislikes direct sun'],
+        stockLevel: 5,
+        images: [
+          {
+            imageId: 1,
+            size: 'small',
+            title: 'Small Boston Fern',
+            imageSrc: './images/boston_fern_sm.jpg',
+          },
+          {
+            imageId: 2,
+            size: 'large',
+            title: 'Large Boston Fern',
+            imageSrc: './images/boston_fern_sm.jpg',
+          },
+        ],
+        price: 1.99,
+        addedToCart: false,
+      },
+      {
+        productId: 2,
+        name: 'Maidenhair Fern',
+        description:
+          'Adiantum, the maidenhair fern, is a genus of about 250 species of ferns in the subfamily Vittarioideae of the family Pteridaceae.',
+        features: ['Moisture loving', 'Easy care', 'Dislikes direct sun'],
+        stockLevel: 5,
+        images: [
+          {
+            id: 1,
+            size: 'small',
+            title: 'Small Boston Fern',
+            imageSrc: './images/maidenhair_fern_sm.jpg',
+          },
+          {
+            id: 2,
+            size: 'large',
+            title: 'Large Boston Fern',
+            imageSrc: './images/maidenhair_fern_sm.jpg',
+          },
+        ],
+        price: 6.99,
+        addedToCart: false,
+      },
+      {
+        productId: 3,
+        name: 'Tree Fern',
+        description:
+          'The tree ferns are the ferns that grow with a trunk elevating the fronds above ground level.',
+        features: ['Moisture loving', 'Easy care', 'Dislikes direct sun'],
+        stockLevel: 5,
+        images: [
+          {
+            id: 1,
+            size: 'small',
+            title: 'Small Boston Fern',
+            imageSrc: './images/tree_fern_sm.jpg',
+          },
+          {
+            id: 2,
+            size: 'large',
+            title: 'Large Boston Fern',
+            imageSrc: './images/tree_fern_sm.jpg',
+          },
+        ],
+        price: 3.99,
+        addedToCart: false,
+      },
+    ],
+  },
+  mutations: {
+    updateCart(state, productId) {
+      if (!state.cart.includes(productId)) {
+        return state.cart.push(productId);
+      }
+      state.cart.splice(state.cart.indexOf(productId), 1);
+    },
+  },
+  getters: {
+    getAllProducts(state) {
+      return state.products;
+    },
+    getProduct: (state) => (productId) => {
+      return state.products.find(
+        (product) => product.productId === parseInt(productId)
+      );
+    },
+    getCartLength(state) {
+      return state.cart.length;
+    },
+  },
+});
+
 const ProductDetails = Vue.component('Product-Details', {
   template: `
     <div class="product-details">
       <h3>Product Details</h3>
-      {{greeting}}
+      {{product.productId}}
     </div>
   `,
-  props: ['greeting'],
+  data() {
+    return {
+      product: {},
+    };
+  },
+  mounted() {
+    this.product = store.getters.getProduct(this.$route.params.productId);
+  },
 });
 
 const Product = Vue.component('Product', {
@@ -13,7 +121,7 @@ const Product = Vue.component('Product', {
     <div class="product">
       <h3>{{product.name}}</h3>
       <img
-        :src="getImage(product)"
+        v-bind:src="getImage(product)"
       />
 
       <p>{{product.description}}</p>
@@ -24,10 +132,15 @@ const Product = Vue.component('Product', {
       <p>&pound;{{product.price}}</p>
 
       <div class="promo-blocks__actions">
-      <router-link :to="{ name: 'productDetails', params: {productId: product.productId }}" class="button--anchor">Full Details</router-link>        
+      <router-link 
+        v-bind:to="{ name: 'productDetails', params: {productId: product.productId }}" 
+        v-bind:test="{ product }"
+        class="button--anchor">
+        Full Details
+      </router-link>        
       <button
-          :disabled="product.stockLevel === 0"
-          :class="{'button--disabled': product.stockLevel === 0}"
+          v-bind:disabled="product.stockLevel === 0"
+          v-bind:class="{'button--disabled': product.stockLevel === 0}"
           @click="addToCart(product)"
           >
           {{product.addedToCart ? "Remove from cart" : "Add to cart"}}
@@ -36,14 +149,14 @@ const Product = Vue.component('Product', {
       </div>
     </div>
   `,
-  props: ['product', 'updateCart'],
+  props: ['product'],
   methods: {
     getImage(product) {
       return product.images[0].imageSrc;
     },
     addToCart(product) {
       product.addedToCart = !product.addedToCart;
-      this.$emit('add-to-cart', product);
+      this.$store.commit('updateCart', product.productId);
     },
   },
 });
@@ -59,10 +172,9 @@ const Home = Vue.component('Home', {
 
       <div class="promo-blocks products">
         <product
-          v-for="product in products"
-          :key="product.productId"
-          :product="product"
-          @add-to-cart="updateCart"
+          v-for="product in getAllProducts"
+          v-bind:key="product.productId"
+          v-bind:product="product"
         ></product>
       </div>
 
@@ -104,20 +216,11 @@ const Home = Vue.component('Home', {
       </div>
     </div>
   `,
-  props: ['products', 'addToCart'],
-  methods: {
-    updateCart(product) {
-      this.$emit('update-cart', product);
+  computed: {
+    getAllProducts() {
+      return store.getters.getAllProducts;
     },
   },
-});
-
-const Products = Vue.component('products', {
-  template: `
-    <div>
-      <h2>Our plants</h2>
-    </div>
-  `,
 });
 
 const router = new VueRouter({
@@ -127,102 +230,16 @@ const router = new VueRouter({
       component: Home,
       props: true,
     },
-    { path: '/products', component: Products },
     {
       path: '/products/:productId',
       name: 'productDetails',
       component: ProductDetails,
-      props: { greeting: 'hello' },
+      props: true,
     },
   ],
 });
 
 new Vue({
-  methods: {
-    updateCart(product) {
-      if (!this.cart.includes(product.productId)) {
-        return this.cart.push(product.productId);
-      }
-
-      this.cart.splice(this.cart.indexOf(product.productId), 1);
-    },
-  },
-  data: {
-    cart: [],
-    products: [
-      {
-        productId: 1,
-        name: 'Boston Fern',
-        description:
-          'Jagged green fronds - perfect for a bathroom or light windowsill.',
-        features: ['Moisture loving', 'Easy care', 'Dislikes direct sun'],
-        stockLevel: 5,
-        images: [
-          {
-            imageId: 1,
-            size: 'small',
-            title: 'Small Boston Fern',
-            imageSrc: './images/boston_fern_sm.jpg',
-          },
-          {
-            imageId: 2,
-            size: 'large',
-            title: 'Large Boston Fern',
-            imageSrc: './images/boston_fern_sm.jpg',
-          },
-        ],
-        price: 1.99,
-        addedToCart: false,
-      },
-      {
-        productId: 2,
-        name: 'Maidenhair Fern',
-        description:
-          'Jagged green fronds - perfect for a bathroom or light windowsill.',
-        features: ['Moisture loving', 'Easy care', 'Dislikes direct sun'],
-        stockLevel: 5,
-        images: [
-          {
-            id: 1,
-            size: 'small',
-            title: 'Small Boston Fern',
-            imageSrc: './images/maidenhair_fern_sm.jpg',
-          },
-          {
-            id: 2,
-            size: 'large',
-            title: 'Large Boston Fern',
-            imageSrc: './images/maidenhair_fern_sm.jpg',
-          },
-        ],
-        price: 6.99,
-        addedToCart: false,
-      },
-      {
-        productId: 3,
-        name: 'Tree Fern',
-        description:
-          'Jagged green fronds - perfect for a bathroom or light windowsill.',
-        features: ['Moisture loving', 'Easy care', 'Dislikes direct sun'],
-        stockLevel: 5,
-        images: [
-          {
-            id: 1,
-            size: 'small',
-            title: 'Small Boston Fern',
-            imageSrc: './images/tree_fern_sm.jpg',
-          },
-          {
-            id: 2,
-            size: 'large',
-            title: 'Large Boston Fern',
-            imageSrc: './images/tree_fern_sm.jpg',
-          },
-        ],
-        price: 3.99,
-        addedToCart: false,
-      },
-    ],
-  },
   router,
+  store,
 }).$mount('#app');

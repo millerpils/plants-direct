@@ -23,23 +23,24 @@
           <div class="container">
             <div class="navbar__heading">
               <h1>
-                Plants Direct
-                <span class="heading__sub">"Our plants, your passion"</span>
+                <router-link to="/">
+                  Plants Direct
+                  <span class="heading__sub">"Our plants, your passion"</span>
+                </router-link>
               </h1>
             </div>
             <ul class="navbar__navigation">
               <li><router-link to="/">Home</router-link></li>
-              <li><router-link to="/products">Plants</router-link></li>
-              <li><a href="/about">About</a></li>
-              <li><a href="/contact">Contact</a></li>
+              <li><router-link to="/about">About</router-link></li>
+              <li><router-link to="/contact">Contact</router-link></li>
             </ul>
-            <div class="cart">Cart ({{cart.length}})</div>
+            <div class="cart">Cart ({{store.getters.getCartLength}})</div>
           </div>
         </div>
       </div>
       <main>
         <div class="container">
-          <router-view :products="products" @update-cart="updateCart" />
+          <router-view />
         </div>
       </main>
       <footer>
@@ -49,6 +50,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>
     <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+    <script src=" https://unpkg.com/vuex@3.6.2/dist/vuex.js"></script>
     <script src="./js/main.js"></script>
   </body>
 </html>
