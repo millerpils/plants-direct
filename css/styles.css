@@ -145,3 +145,11 @@ main {
 .promo-blocks > div img {
   max-height: 12rem;
 }
+
+.product-details {
+  display: flex;
+}
+
+.product-details aside {
+  margin-left: 1rem;
+}
