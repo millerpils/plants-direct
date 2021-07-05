@@ -102,14 +102,44 @@ const store = new Vuex.Store({
 const ProductDetails = Vue.component('Product-Details', {
   template: `
     <div class="product-details">
-      <h3>Product Details</h3>
-      {{product.productId}}
+      <div class="product-details__main">
+        <img
+          v-if="product.productId"
+          v-bind:src="getImage(product)"
+        />
+      </div>
+      <aside>
+        <h3>{{product.name}}</h3>
+        <p>
+          {{product.description}}
+        </p>
+        <p>
+          &pound;{{product.price}}
+        </p>
+        <button
+            v-bind:disabled="product.stockLevel === 0"
+            v-bind:class="{'button--disabled': product.stockLevel === 0}"
+            @click="addToCart(product)"
+            >
+            {{product.addedToCart ? "Remove from cart" : "Add to cart"}}
+        </button>
+        <span v-if="product.stockLevel === 0">Out of stock :(</span>
+      </aside>
     </div>
   `,
   data() {
     return {
       product: {},
     };
+  },
+  methods: {
+    getImage(product) {
+      return product.images[1].imageSrc;
+    },
+    addToCart(product) {
+      product.addedToCart = !product.addedToCart;
+      this.$store.commit('updateCart', product.productId);
+    },
   },
   mounted() {
     this.product = store.getters.getProduct(this.$route.params.productId);
@@ -134,7 +164,8 @@ const Product = Vue.component('Product', {
       <div class="promo-blocks__actions">
       <router-link 
         v-bind:to="{ name: 'productDetails', params: {productId: product.productId }}" 
-        v-bind:test="{ product }"
+      
+        @add-to-cart="addToCart"
         class="button--anchor">
         Full Details
       </router-link>        
