@@ -2,56 +2,6 @@ body {
   font-family: 'Open Sans', serif;
 }
 
-footer {
-  padding: 1rem 0;
-  height: 15rem;
-  background-color: #575c55;
-  color: ivory;
-}
-
-.navbar {
-  background-color: #575c55;
-  padding: 1.5rem 0 1rem 0;
-  color: ivory;
-}
-
-.navbar__heading h1 a {
-  color: ivory;
-  height: 100%;
-  text-decoration: none;
-}
-
-.navbar__navigation {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-}
-
-.navbar__navigation a {
-  text-decoration: none;
-}
-
-.navbar__navigation a.router-link-exact-active {
-  text-decoration: underline;
-}
-
-.navbar__navigation li {
-  margin: 0 0.5rem;
-}
-
-.navbar__inner .container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.container {
-  position: relative;
-  max-width: 1024px;
-  margin: 0 auto;
-  padding: 0 1rem;
-}
-
 h1,
 h2,
 h3 {
@@ -69,8 +19,91 @@ a {
   color: #acc12f;
 }
 
-.promo-blocks {
-  display: flex;
+button {
+  padding: 0.4rem;
+}
+
+li {
+  margin-bottom: 0.5rem;
+}
+
+main {
+  margin: 1.5rem 0;
+}
+
+footer {
+  padding: 1rem 0;
+  height: 15rem;
+  background-color: #575c55;
+  color: ivory;
+}
+
+@media screen and (max-width: 1024px) {
+  .navbar__heading h1 {
+    text-align: center;
+  }
+
+  .navbar__navigation {
+    text-align: center;
+  }
+
+  .cart {
+    text-align: right;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .navbar__inner .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .navbar__navigation {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+  }
+
+  .navbar__navigation li {
+    margin: 0 0.5rem;
+  }
+
+  .promo-blocks {
+    display: flex;
+  }
+}
+
+button:hover,
+.button--anchor:hover {
+  background-color: #acc12f;
+}
+
+.navbar {
+  background-color: #575c55;
+  padding: 1.5rem 0 1rem 0;
+  color: ivory;
+}
+
+.navbar__heading h1 a {
+  color: ivory;
+  height: 100%;
+  text-decoration: none;
+}
+
+.navbar__navigation a {
+  text-decoration: none;
+}
+
+.navbar__navigation a.router-link-exact-active {
+  text-decoration: underline;
+}
+
+.container {
+  position: relative;
+  max-width: 1024px;
+  margin: 0 auto;
+  padding: 0 1rem;
 }
 
 .promo-blocks > div {
@@ -90,10 +123,6 @@ a {
   list-style: disc;
 }
 
-li {
-  margin-bottom: 0.5rem;
-}
-
 .button--anchor,
 button {
   font-size: 1rem;
@@ -106,22 +135,9 @@ button {
   margin-right: 0.5rem;
 }
 
-button {
-  padding: 0.4rem;
-}
-
-button:hover,
-.button--anchor:hover {
-  background-color: #acc12f;
-}
-
 .promo-blocks__actions {
   display: flex;
   align-items: center;
-}
-
-main {
-  margin: 1.5rem 0;
 }
 
 .heading__sub {
