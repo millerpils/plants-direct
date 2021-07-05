@@ -90,6 +90,11 @@ const store = new Vuex.Store({
     getAllProducts(state) {
       return state.products;
     },
+    getOneProduct: (state) => (productId) => {
+      return state.products.find(
+        (product) => product.productId === parseInt(productId)
+      );
+    },
     getCartLength(state) {
       return state.cart.length;
     },
@@ -100,9 +105,17 @@ const ProductDetails = Vue.component('Product-Details', {
   template: `
     <div class="product-details">
       <h3>Product Details</h3>
-
+      {{product.productId}}
     </div>
   `,
+  data() {
+    return {
+      product: {},
+    };
+  },
+  mounted() {
+    this.product = store.getters.getOneProduct(this.$route.params.productId);
+  },
 });
 
 const Product = Vue.component('Product', {
@@ -110,7 +123,7 @@ const Product = Vue.component('Product', {
     <div class="product">
       <h3>{{product.name}}</h3>
       <img
-        :src="getImage(product)"
+        v-bind:src="getImage(product)"
       />
 
       <p>{{product.description}}</p>
@@ -121,10 +134,14 @@ const Product = Vue.component('Product', {
       <p>&pound;{{product.price}}</p>
 
       <div class="promo-blocks__actions">
-      <router-link :to="{ name: 'productDetails', params: {productId: product.productId }}" class="button--anchor">Full Details</router-link>        
+      <router-link 
+        v-bind:to="{ name: 'productDetails', params: {productId: product.productId }}" 
+        class="button--anchor">
+        Full Details
+      </router-link>        
       <button
-          :disabled="product.stockLevel === 0"
-          :class="{'button--disabled': product.stockLevel === 0}"
+          v-bind:disabled="product.stockLevel === 0"
+          v-bind:class="{'button--disabled': product.stockLevel === 0}"
           @click="addToCart(product)"
           >
           {{product.addedToCart ? "Remove from cart" : "Add to cart"}}
@@ -157,8 +174,8 @@ const Home = Vue.component('Home', {
       <div class="promo-blocks products">
         <product
           v-for="product in products"
-          :key="product.productId"
-          :product="product"
+          v-bind:key="product.productId"
+          v-bind:product="product"
           @add-to-cart="updateCart"
         ></product>
       </div>
@@ -221,7 +238,7 @@ const router = new VueRouter({
       path: '/products/:productId',
       name: 'productDetails',
       component: ProductDetails,
-      props: { greeting: 'hello' },
+      props: true,
     },
   ],
 });

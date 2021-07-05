@@ -39,7 +39,7 @@
       <main>
         <div class="container">
           <router-view
-            :products="store.getters.getAllProducts"
+            v-bind:products="store.getters.getAllProducts"
             @update-cart="updateCart"
           />
         </div>
