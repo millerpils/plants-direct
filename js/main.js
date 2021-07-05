@@ -77,13 +77,22 @@ const store = new Vuex.Store({
     ],
   },
   mutations: {
-    updateCart(state, payload) {},
+    updateCart(state, productId) {
+      if (!state.cart.includes(productId)) {
+        return state.cart.push(productId);
+      }
+      state.cart.splice(state.cart.indexOf(productId), 1);
+    },
   },
   actions: {},
   modules: {},
   getters: {
-    getAllProducts: (state) => state.products,
-    getCartLength: (state) => state.cart.length,
+    getAllProducts(state) {
+      return state.products;
+    },
+    getCartLength(state) {
+      return state.cart.length;
+    },
   },
 });
 
@@ -131,7 +140,7 @@ const Product = Vue.component('Product', {
     },
     addToCart(product) {
       product.addedToCart = !product.addedToCart;
-      this.$emit('add-to-cart', product);
+      this.$emit('add-to-cart', product.productId);
     },
   },
 });
@@ -194,19 +203,10 @@ const Home = Vue.component('Home', {
   `,
   props: ['products', 'addToCart'],
   methods: {
-    updateCart(product) {
-      console.log(product);
-      this.$emit('update-cart', product);
+    updateCart(productId) {
+      this.$emit('update-cart', productId);
     },
   },
-});
-
-const Products = Vue.component('products', {
-  template: `
-    <div>
-      <h2>Our plants</h2>
-    </div>
-  `,
 });
 
 const router = new VueRouter({
@@ -216,7 +216,7 @@ const router = new VueRouter({
       component: Home,
       props: true,
     },
-    { path: '/products', component: Products },
+
     {
       path: '/products/:productId',
       name: 'productDetails',
@@ -228,12 +228,8 @@ const router = new VueRouter({
 
 new Vue({
   methods: {
-    updateCart(product) {
-      console.log(store.getters.getAllProducts);
-      // if (!this.cart.includes(product.productId)) {
-      //   return this.cart.push(product.productId);
-      // }
-      // this.cart.splice(this.cart.indexOf(product.productId), 1);
+    updateCart(productId) {
+      this.$store.commit('updateCart', productId);
     },
   },
   router,
