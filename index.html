@@ -23,8 +23,10 @@
           <div class="container">
             <div class="navbar__heading">
               <h1>
-                Plants Direct
-                <span class="heading__sub">"Our plants, your passion"</span>
+                <router-link to="/">
+                  Plants Direct
+                  <span class="heading__sub">"Our plants, your passion"</span>
+                </router-link>
               </h1>
             </div>
             <ul class="navbar__navigation">
@@ -38,10 +40,7 @@
       </div>
       <main>
         <div class="container">
-          <router-view
-            v-bind:products="store.getters.getAllProducts"
-            @update-cart="updateCart"
-          />
+          <router-view />
         </div>
       </main>
       <footer>

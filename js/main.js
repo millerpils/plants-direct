@@ -6,7 +6,7 @@ const store = new Vuex.Store({
         productId: 1,
         name: 'Boston Fern',
         description:
-          'Jagged green fronds - perfect for a bathroom or light windowsill.',
+          'Nephrolepis exaltata, known as the sword fern or Boston fern, is a species of fern in the family Lomariopsidaceae native to tropical regions throughout the world.',
         features: ['Moisture loving', 'Easy care', 'Dislikes direct sun'],
         stockLevel: 5,
         images: [
@@ -30,7 +30,7 @@ const store = new Vuex.Store({
         productId: 2,
         name: 'Maidenhair Fern',
         description:
-          'Jagged green fronds - perfect for a bathroom or light windowsill.',
+          'Adiantum, the maidenhair fern, is a genus of about 250 species of ferns in the subfamily Vittarioideae of the family Pteridaceae.',
         features: ['Moisture loving', 'Easy care', 'Dislikes direct sun'],
         stockLevel: 5,
         images: [
@@ -54,7 +54,7 @@ const store = new Vuex.Store({
         productId: 3,
         name: 'Tree Fern',
         description:
-          'Jagged green fronds - perfect for a bathroom or light windowsill.',
+          'The tree ferns are the ferns that grow with a trunk elevating the fronds above ground level.',
         features: ['Moisture loving', 'Easy care', 'Dislikes direct sun'],
         stockLevel: 5,
         images: [
@@ -84,13 +84,11 @@ const store = new Vuex.Store({
       state.cart.splice(state.cart.indexOf(productId), 1);
     },
   },
-  actions: {},
-  modules: {},
   getters: {
     getAllProducts(state) {
       return state.products;
     },
-    getOneProduct: (state) => (productId) => {
+    getProduct: (state) => (productId) => {
       return state.products.find(
         (product) => product.productId === parseInt(productId)
       );
@@ -114,7 +112,7 @@ const ProductDetails = Vue.component('Product-Details', {
     };
   },
   mounted() {
-    this.product = store.getters.getOneProduct(this.$route.params.productId);
+    this.product = store.getters.getProduct(this.$route.params.productId);
   },
 });
 
@@ -136,6 +134,7 @@ const Product = Vue.component('Product', {
       <div class="promo-blocks__actions">
       <router-link 
         v-bind:to="{ name: 'productDetails', params: {productId: product.productId }}" 
+        v-bind:test="{ product }"
         class="button--anchor">
         Full Details
       </router-link>        
@@ -150,14 +149,14 @@ const Product = Vue.component('Product', {
       </div>
     </div>
   `,
-  props: ['product', 'updateCart'],
+  props: ['product'],
   methods: {
     getImage(product) {
       return product.images[0].imageSrc;
     },
     addToCart(product) {
       product.addedToCart = !product.addedToCart;
-      this.$emit('add-to-cart', product.productId);
+      this.$store.commit('updateCart', product.productId);
     },
   },
 });
@@ -173,10 +172,9 @@ const Home = Vue.component('Home', {
 
       <div class="promo-blocks products">
         <product
-          v-for="product in products"
+          v-for="product in getAllProducts"
           v-bind:key="product.productId"
           v-bind:product="product"
-          @add-to-cart="updateCart"
         ></product>
       </div>
 
@@ -218,10 +216,9 @@ const Home = Vue.component('Home', {
       </div>
     </div>
   `,
-  props: ['products', 'addToCart'],
-  methods: {
-    updateCart(productId) {
-      this.$emit('update-cart', productId);
+  computed: {
+    getAllProducts() {
+      return store.getters.getAllProducts;
     },
   },
 });
@@ -233,7 +230,6 @@ const router = new VueRouter({
       component: Home,
       props: true,
     },
-
     {
       path: '/products/:productId',
       name: 'productDetails',
@@ -244,11 +240,6 @@ const router = new VueRouter({
 });
 
 new Vue({
-  methods: {
-    updateCart(productId) {
-      this.$store.commit('updateCart', productId);
-    },
-  },
   router,
   store,
 }).$mount('#app');
