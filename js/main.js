@@ -1,10 +1,5 @@
-const store = new Vuex.Store({
+const products = {
   state: {
-    cart: [],
-    brand: 'Plants Direct',
-    address: '21 Sussex Gardens',
-    city: 'London',
-    postcode: 'SW1 01L',
     products: [
       {
         productId: 1,
@@ -80,14 +75,6 @@ const store = new Vuex.Store({
       },
     ],
   },
-  mutations: {
-    updateCart(state, productId) {
-      if (!state.cart.includes(productId)) {
-        return state.cart.push(productId);
-      }
-      state.cart.splice(state.cart.indexOf(productId), 1);
-    },
-  },
   getters: {
     getAllProducts(state) {
       return state.products;
@@ -97,15 +84,50 @@ const store = new Vuex.Store({
         (product) => product.productId === parseInt(productId)
       );
     },
+  },
+};
+
+const cart = {
+  state: {
+    cart: [],
+  },
+  mutations: {
+    updateCart(state, productId) {
+      if (!state.cart.includes(productId)) {
+        return state.cart.push(productId);
+      }
+      state.cart.splice(state.cart.indexOf(productId), 1);
+    },
+  },
+  getters: {
     getCartLength(state) {
       return state.cart.length;
     },
+  },
+};
+
+const business = {
+  state: {
+    brand: 'Plants Direct',
+    address: '21 Sussex Gardens',
+    city: 'London',
+    postcode: 'SW1 01L',
+  },
+  getters: {
     getFullAddress(state) {
       return `${state.address}, ${state.city}, ${state.postcode}`;
     },
     getBrand(state) {
       return state.brand;
     },
+  },
+};
+
+const store = new Vuex.Store({
+  modules: {
+    products,
+    cart,
+    business,
   },
 });
 
@@ -152,7 +174,7 @@ const ProductDetails = Vue.component('Product-Details', {
     },
   },
   mounted() {
-    this.product = store.getters.getProduct(this.$route.params.productId);
+    this.product = this.$store.getters.getProduct(this.$route.params.productId);
   },
 });
 
@@ -255,7 +277,7 @@ const Home = Vue.component('Home', {
   `,
   computed: {
     getAllProducts() {
-      return store.getters.getAllProducts;
+      return this.$store.getters.getAllProducts;
     },
   },
 });
