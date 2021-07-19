@@ -36,6 +36,7 @@ main {
 }
 
 footer {
+  font-size: small;
   padding: 1rem 0;
   height: 15rem;
   background-color: #575c55;

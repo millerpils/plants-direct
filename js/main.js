@@ -1,6 +1,10 @@
 const store = new Vuex.Store({
   state: {
     cart: [],
+    brand: 'Plants Direct',
+    address: '21 Sussex Gardens',
+    city: 'London',
+    postcode: 'SW1 01L',
     products: [
       {
         productId: 1,
@@ -96,6 +100,12 @@ const store = new Vuex.Store({
     getCartLength(state) {
       return state.cart.length;
     },
+    getFullAddress(state) {
+      return `${state.address}, ${state.city}, ${state.postcode}`;
+    },
+    getBrand(state) {
+      return state.brand;
+    },
   },
 });
 
@@ -127,11 +137,6 @@ const ProductDetails = Vue.component('Product-Details', {
       </aside>
     </div>
   `,
-  data() {
-    return {
-      product: {},
-    };
-  },
   methods: {
     getImage(product) {
       return product.images[1].imageSrc;
@@ -273,4 +278,12 @@ const router = new VueRouter({
 new Vue({
   router,
   store,
+  computed: {
+    footerCopyrightNotice() {
+      return '2021 ' + store.getters.getBrand;
+    },
+    footerAddress() {
+      return store.getters.getFullAddress;
+    },
+  },
 }).$mount('#app');
