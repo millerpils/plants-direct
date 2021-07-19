@@ -137,6 +137,11 @@ const ProductDetails = Vue.component('Product-Details', {
       </aside>
     </div>
   `,
+  data() {
+    return {
+      product: {},
+    };
+  },
   methods: {
     getImage(product) {
       return product.images[1].imageSrc;
@@ -158,18 +163,14 @@ const Product = Vue.component('Product', {
       <img
         v-bind:src="getImage(product)"
       />
-
       <p>{{product.description}}</p>
       <ul>
         <li v-for="feature in product.features">{{feature}}</li>
       </ul>
-
       <p>&pound;{{product.price}}</p>
-
       <div class="promo-blocks__actions">
       <router-link 
         v-bind:to="{ name: 'productDetails', params: {productId: product.productId }}" 
-      
         @add-to-cart="addToCart"
         class="button--anchor">
         Full Details
