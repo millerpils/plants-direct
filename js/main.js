@@ -148,12 +148,8 @@ const ProductDetails = Vue.component('Product-Details', {
         <p>
           &pound;{{product.price}}
         </p>
-        <button
-            v-bind:disabled="product.stockLevel === 0"
-            v-bind:class="{'button--disabled': product.stockLevel === 0}"
-            @click="addToCart(product)"
-            >
-            {{product.addedToCart ? "Remove from cart" : "Add to cart"}}
+        <button v-on:click="addToCart(product)">
+          {{product.addedToCart ? "Remove from cart" : "Add to cart"}}
         </button>
         <span v-if="product.stockLevel === 0">Out of stock :(</span>
       </aside>
@@ -191,20 +187,15 @@ const Product = Vue.component('Product', {
       </ul>
       <p>&pound;{{product.price}}</p>
       <div class="promo-blocks__actions">
-      <router-link 
-        v-bind:to="{ name: 'productDetails', params: {productId: product.productId }}" 
-        @add-to-cart="addToCart"
-        class="button--anchor">
-        Full Details
-      </router-link>        
-      <button
-          v-bind:disabled="product.stockLevel === 0"
-          v-bind:class="{'button--disabled': product.stockLevel === 0}"
-          @click="addToCart(product)"
-          >
+        <router-link 
+          v-bind:to="{ name: 'productDetails', params: {productId: product.productId }}" 
+          v-on:add-to-cart="addToCart"
+          class="button--anchor">
+          Full Details
+        </router-link>        
+        <button v-on:click="addToCart(product)">
           {{product.addedToCart ? "Remove from cart" : "Add to cart"}}
         </button>
-        <span v-if="product.stockLevel === 0">Out of stock :(</span>
       </div>
     </div>
   `,
@@ -235,43 +226,6 @@ const Home = Vue.component('Home', {
           v-bind:key="product.productId"
           v-bind:product="product"
         ></product>
-      </div>
-
-      <div class="promo-section promo">
-        <h2>Why keep houseplants?</h2>
-        <p>
-          Plants are known to have a calming effect on our nervous systems,
-          but the benefits don't stop there.
-        </p>
-        <div class="promo-blocks">
-          <div>
-            <h3>Clean air</h3>
-            <img src="./images/fresh_air_sm.jpg" />
-            <p>
-              Sed ut perspiciatis, unde omnis iste natus error sit
-              voluptatem accusantium doloremque laudantium, totam rem
-              aperiam eaque ipsa
-            </p>
-          </div>
-          <div>
-            <h3>Nervous system</h3>
-            <img src="./images/fresh_air_sm.jpg" />
-            <p>
-              Sed ut perspiciatis, unde omnis iste natus error sit
-              voluptatem accusantium doloremque laudantium, totam rem
-              aperiam eaque ipsa
-            </p>
-          </div>
-          <div>
-            <h3>Great hobby</h3>
-            <img src="./images/fresh_air_sm.jpg" />
-            <p>
-              Sed ut perspiciatis, unde omnis iste natus error sit
-              voluptatem accusantium doloremque laudantium, totam rem
-              aperiam eaque ipsa
-            </p>
-          </div>
-        </div>
       </div>
     </div>
   `,

@@ -37,6 +37,7 @@ main {
 
 footer {
   font-size: small;
+  margin-top: 5rem;
   padding: 1rem 0;
   height: 15rem;
   background-color: #575c55;
@@ -117,12 +118,6 @@ button {
   font-style: italic;
   display: block;
   margin-top: 0.8rem;
-}
-
-.button--disabled,
-.button--disabled:hover {
-  background-color: lightgray;
-  cursor: unset;
 }
 
 .button--active {
