@@ -157,6 +157,7 @@ const ProductDetails = Vue.component('Product-Details', {
   `,
   data() {
     return {
+      // Don't remove: mounted data populates this
       product: {},
     };
   },
@@ -178,19 +179,20 @@ const Product = Vue.component('Product', {
   template: `
     <div class="product">
       <h3>{{product.name}}</h3>
-      <img
-        v-bind:src="getImage(product)"
-      />
+      <img v-bind:src="getImage(product)" />
       <p>{{product.description}}</p>
       <ul>
-        <li v-for="feature in product.features">{{feature}}</li>
+        <li v-for="feature in product.features">
+          {{feature}}
+        </li>
       </ul>
       <p>&pound;{{product.price}}</p>
       <div class="promo-blocks__actions">
         <router-link 
           v-bind:to="{ name: 'productDetails', params: {productId: product.productId }}" 
           v-on:add-to-cart="addToCart"
-          class="button--anchor">
+          class="button--anchor"
+        >
           Full Details
         </router-link>        
         <button v-on:click="addToCart(product)">
@@ -211,6 +213,28 @@ const Product = Vue.component('Product', {
   },
 });
 
+const About = Vue.component('About', {
+  template: `
+    <div>
+      <h1>About us</h1>
+      <p>
+        Apprentices will add more content here.
+      </p>
+    </div>
+  `,
+});
+
+const Contact = Vue.component('Contact', {
+  template: `
+    <div>
+      <h1>Contact us</h1>
+      <p>
+        Apprentices will add more content here.
+      </p>
+    </div>
+  `,
+});
+
 const Home = Vue.component('Home', {
   template: `
     <div>
@@ -219,7 +243,6 @@ const Home = Vue.component('Home', {
         Want to "fernish" your home? Then you're in the right place! Take a
         look at our selection of plants below.
       </p>
-
       <div class="promo-blocks products">
         <product
           v-for="product in getAllProducts"
@@ -241,13 +264,19 @@ const router = new VueRouter({
     {
       path: '/',
       component: Home,
-      props: true,
+    },
+    {
+      path: '/about',
+      component: About,
+    },
+    {
+      path: '/contact',
+      component: Contact,
     },
     {
       path: '/products/:productId',
       name: 'productDetails',
       component: ProductDetails,
-      props: true,
     },
   ],
 });
