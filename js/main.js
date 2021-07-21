@@ -136,7 +136,6 @@ const ProductDetails = Vue.component('Product-Details', {
     <div class="product-details">
       <div class="product-details__main">
         <img
-          v-if="product.productId"
           v-bind:src="getImage(product)"
         />
       </div>
@@ -189,7 +188,7 @@ const Product = Vue.component('Product', {
       <p>&pound;{{product.price}}</p>
       <div class="promo-blocks__actions">
         <router-link 
-          v-bind:to="{ name: 'productDetails', params: {productId: product.productId }}" 
+          v-bind:to="{ name: 'productDetails', params: {productId: product.productId} }" 
           v-on:add-to-cart="addToCart"
           class="button--anchor"
         >
